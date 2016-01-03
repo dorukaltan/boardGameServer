@@ -22,7 +22,7 @@ public class GameTable {
 			"VALUES" + 
 			"(" + 
 			"?," + 
-			"?);";
+			"?,?);";
 		
 		Connection con = null;
 		try
@@ -31,6 +31,8 @@ public class GameTable {
 			PreparedStatement pstatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			pstatement.setInt(1, gameTableModel.getUserId());
 			pstatement.setString(2, gameTableModel.getTableName());
+			pstatement.setString(3, gameTableModel.getTablePassword());
+			
 			int affectedRows = pstatement.executeUpdate();
 			if(affectedRows > 0)
 			{
@@ -95,5 +97,58 @@ public class GameTable {
 			}
 		}
 		return gameTables;
+	}
+
+	public static GameTableModel getGameTableByIdAndPassword(GameTableModel gameTableModel)
+	{
+		Connection conn = null; 
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		
+		String query = "SELECT * FROM GameTable where "
+							+ "status = 'A' and "
+							+ "tableId = ? and "
+							+ "tablePassword = ? "
+							+ "order by createtime desc";
+
+		try
+		{
+			conn = MySQL.getConnection();
+			pst = conn.prepareStatement(query);
+			pst.setInt(1, gameTableModel.getTableId());
+			pst.setString(2, gameTableModel.getTablePassword());
+			rs = pst.executeQuery();
+			GameTableModel model = null;
+			if(rs.next())
+			{
+				model = new GameTableModel();
+				model.setTableId(rs.getInt("tableId"));
+				model.setUserId(rs.getInt("userid"));
+				model.setTableName(rs.getString("name"));
+				model.setTablePassword(null);
+			}
+			else
+			{
+				gameTableModel = null;
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				rs.close();
+				pst.close();
+				conn.close();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return gameTableModel;
 	}
 }
