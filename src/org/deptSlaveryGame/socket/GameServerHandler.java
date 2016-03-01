@@ -16,21 +16,8 @@ public class GameServerHandler extends WebSocketHandler
 	{
 		RWebSocket webSocket = new RWebSocket();
 		return webSocket;
-	}	
-	
-//	public static void LocationBroadcast(int userid, double latitude, double longitude)
-//	{		
-//		System.out.println("broadcast");
-//		for(RWebSocket rWebSocket : webSockets)
-//		{//FIXME:TERSLIK
-//			if(rWebSocket.getPublishers().contains(userid))
-//			{
-//				rWebSocket.sendMessage("cupdate;"+latitude + "," + longitude);
-//				System.out.println("message sent to: " + rWebSocket.getUserid());
-//			}
-//		}
-//	}
-	
+	}
+
 	public static void removeSocketFromList(int userid)
 	{
 		webSockets.remove(getWebSocketByUserid(userid));

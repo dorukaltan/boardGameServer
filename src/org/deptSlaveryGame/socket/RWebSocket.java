@@ -25,7 +25,7 @@ public class RWebSocket implements WebSocket.OnTextMessage {
 		this.connection = connection;
 		System.out.println("opened");
 //		sendMessage("authentication request");
-		//FIXME: open a thread which waits 30 seconds and if userid is 0 discounnects the websocket
+		//TODO: open a thread which waits 30 seconds and if userid is 0 discounnects the websocket
 	}
 
 	public void onMessage(String data) {

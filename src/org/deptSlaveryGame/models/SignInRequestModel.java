@@ -1,9 +1,5 @@
 package org.deptSlaveryGame.models;
 
-import org.deptSlaveryGame.socket.interpreter.RequestType;
-
-import com.google.gson.Gson;
-
 public class SignInRequestModel extends SocketRequestModel {
 	/**
 	 * 
@@ -27,10 +23,4 @@ public class SignInRequestModel extends SocketRequestModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-public static void main(String[] args) {
-	SignInRequestModel model = new SignInRequestModel();
-	model.setEmail("email");
-	model.setRequestType(RequestType.signIn);
-System.out.println(new Gson().toJson(model));
-}
 }
